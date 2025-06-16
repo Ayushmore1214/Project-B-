@@ -1,0 +1,13 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/github-backup-tool
+    - run: gcloud run deploy github-backup-tool --image gcr.io/${{ secrets.GCP_PROJECT }}/github-backup-tool --platform managed

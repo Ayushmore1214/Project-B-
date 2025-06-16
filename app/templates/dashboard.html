@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your Repositories</h1>
+<div class="repo-list">
+    {% for repo in repos %}
+    <div class="repo-card">
+        <h3>{{ repo.name }}</h3>
+        <form method="POST" action="/backup/{{ repo.full_name }}">
+            <button type="submit">Backup</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

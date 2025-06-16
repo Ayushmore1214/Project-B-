@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="backup-history">
+  {% for backup in backups %}
+  <tr>
+    <td>{{ backup.repository_name }}</td>
+    <td>{{ backup.started_at }}</td>
+    <td class="status-{{ backup.status }}">{{ backup.status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

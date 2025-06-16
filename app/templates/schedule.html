@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST">
+  {{ form.hidden_tag() }}
+  {{ form.repo_name.label }} {{ form.repo_name() }}
+  {{ form.interval_hours.label }} {{ form.interval_hours() }}
+  {{ form.submit() }}
+</form>
+{% endblock %}
