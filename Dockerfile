@@ -13,5 +13,7 @@ COPY . .
 # Optional: expose port (helpful for local Docker runs)
 EXPOSE 8080
 
+ENV GOOGLE_APPLICATION_CREDENTIALS="gcp-key.json"
+
 # Run the app using gunicorn with the factory pattern
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers=4", "app:create_app"]
