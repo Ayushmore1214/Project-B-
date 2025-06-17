@@ -1,3 +1,5 @@
-project_id        = "your-gcp-project-id"
-region            = "us-central1"  # Optional, included for clarity
-github_client_id  = "your-github-client-id"
+project_id           = "qwiklabs-gcp-00-1b7e7c7bb263"
+region               = "us-central1"
+gcs_bucket_name      = "backup-bucket"
+github_client_id     = "Ov23liVU2ztX9lHZZxpF"
+github_client_secret = "cac1939a44fb6af4f190600c4ba522877de09ec7"
