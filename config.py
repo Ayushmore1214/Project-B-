@@ -1,11 +1,7 @@
 import os
 
-class Config:
-    SECRET_KEY = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
-SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///backup.db')
-GITHUB_CLIENT_ID = os.getenv('GH_CLIENT_ID')
-GITHUB_CLIENT_SECRET = os.getenv('GH_CLIENT_SECRET')
-GCS_BUCKET_NAME = os.getenv('GCS_BUCKET_NAME', 'your-default-bucket-name')
-DATABASE_URL=postgresql+psycopg2://<USER>:<PASSWORD>@/<DB_NAME>?host=/cloudsql/<CONNECTION_NAME>
-
-
+PROJECT_ID = os.getenv("PROJECT_ID")
+INSTANCE_CONNECTION_NAME = os.getenv("INSTANCE_CONNECTION_NAME")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
