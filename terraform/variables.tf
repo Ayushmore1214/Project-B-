@@ -25,3 +25,10 @@ variable "github_client_secret" {
   type        = string
   sensitive   = true
 }
+
+variable "db_password" {
+  description = "Password for the PostgreSQL user"
+  type        = string
+  sensitive   = true
+}
+
