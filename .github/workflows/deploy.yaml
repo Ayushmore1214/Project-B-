@@ -2,12 +2,29 @@ name: Deploy to Cloud Run
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - run: gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT }}/github-backup-tool
-    - run: gcloud run deploy github-backup-tool --image gcr.io/${{ secrets.GCP_PROJECT }}/github-backup-tool --platform managed
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy github-backup-app \
+            --source . \
+            --region ${{ secrets.GCP_REGION }} \
+            --project ${{ secrets.GCP_PROJECT_ID }} \
+            --set-secrets FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }},GH_CLIENT_ID=${{ secrets.GH_CLIENT_ID }},GH_CLIENT_SECRET=${{ secrets.GH_CLIENT_SECRET }},GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},DATABASE_URL=${{ secrets.DATABASE_URL }}
