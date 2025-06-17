@@ -15,3 +15,9 @@ resource "google_sql_database" "database" {
   name     = "backups"
   instance = google_sql_database_instance.main.name
 }
+
+resource "google_sql_user" "postgres_user" {
+  name     = "postgres"
+  instance = google_sql_database_instance.main.name
+  password = var.db_password
+}
