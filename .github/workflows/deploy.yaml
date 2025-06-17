@@ -21,10 +21,27 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Configure Docker for GCP
+        run: |
+          gcloud auth configure-docker
+
+      - name: Build and Push Docker image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/github-backup-tool .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/github-backup-tool
+
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy github-backup-app \
-            --source . \
+          gcloud run deploy github-backup-tool \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/github-backup-tool \
             --region ${{ secrets.GCP_REGION }} \
+            --platform managed \
             --project ${{ secrets.GCP_PROJECT_ID }} \
-            --set-secrets FLASK_SECRET_KEY=${{ secrets.FLASK_SECRET_KEY }},GH_CLIENT_ID=${{ secrets.GH_CLIENT_ID }},GH_CLIENT_SECRET=${{ secrets.GH_CLIENT_SECRET }},GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},DATABASE_URL=${{ secrets.DATABASE_URL }}
+            --allow-unauthenticated \
+            --add-cloudsql-instances ${{ secrets.INSTANCE_CONNECTION_NAME }} \
+            --set-secrets \
+              GITHUB_TOKEN=github-token:latest,\
+              DB_PASSWORD=db-password:latest,\
+              PROJECT_ID=project-id:latest,\
+              INSTANCE_CONNECTION_NAME=instance-connection-name:latest,\
+              BUCKET_NAME=bucket-name:latest
