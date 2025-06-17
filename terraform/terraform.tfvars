@@ -1,3 +1,3 @@
-project_id           = "qwiklabs-gcp-01-d86b22e824fd"
-region               = "us-central1"
+project_id           = "qwiklabs-gcp-01-be2060d6e3ee"
+region               = "us-east1"
 gcs_bucket_name      = "backup-bucket"
